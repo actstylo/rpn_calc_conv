@@ -15,9 +15,8 @@ ops = {
 }
  
  
-def get_input():
-    inp = input('expression: ')
-    tokens = inp.strip().split()
+def process_input(expression):
+    tokens = expression.strip().split()
     tokenvals = []
     for token in tokens:
         if token in set('1234567890.'):
@@ -64,6 +63,7 @@ def shunting(tokenvals):
  
 
 if __name__ == '__main__':
-    rp = shunting(get_input())
+    expression = input('> ')
+    rp = shunting(process_input(expression))
     print(rp)
 

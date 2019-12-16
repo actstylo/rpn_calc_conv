@@ -11,7 +11,7 @@ ops = {
 }
 
 
-def eval_expression(tokens, stack=None):
+def calculate(tokens, stack=None):
     if stack is None:
         stack = []
     for token in tokens:
@@ -23,7 +23,10 @@ def eval_expression(tokens, stack=None):
             b = stack.pop()
             a = stack.pop()
             op = ops[token]
-            stack.append(op(a, b))
+            try:
+                stack.append(op(a, b))
+            except ZeroDivisionError:
+                raise ValueError("Invalid divisor: {}".format(b))
         else:
             raise ValueError("Invalid token {token}".format(token))
     return stack
@@ -31,6 +34,6 @@ def eval_expression(tokens, stack=None):
 
 if __name__ == '__main__':
     expression = input('> ')
-    stack = eval_expression(expression.split())
+    stack = calculate(expression.split())
     print(stack[0])
 
